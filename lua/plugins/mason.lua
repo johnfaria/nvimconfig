@@ -2,8 +2,15 @@ return {
   {
     "williamboman/mason.nvim",
     lazy = false,
-    config = function()
-      require("mason").setup({})
+    cmd = "Mason",
+    keys = { {
+      "<leader>pm",
+      "<cmd>Mason<CR>",
+      desc = "Mason",
+    } },
+    build = ":MasonUpadate",
+    config = function(_, opts)
+      require("mason").setup(opts)
     end,
   },
   {
@@ -36,12 +43,10 @@ return {
         capabilities = capabilities,
       })
 
-      print(lspconfig)
-
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go To Definition" })
+      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "References" })
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Actions" })
     end,
   },
 }

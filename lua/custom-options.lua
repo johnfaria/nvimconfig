@@ -10,21 +10,19 @@ vim.wo.relativenumber = true
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap("i", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+vim.api.nvim_set_keymap("v", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+vim.api.nvim_set_keymap("n", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+vim.api.nvim_set_keymap("s", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+vim.api.nvim_set_keymap("n", "<Esc>", "<Esc><cmd>nohlsearch<CR>", { desc = "Save file" })
+vim.api.nvim_set_keymap("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Plugins manager" })
+vim.api.nvim_set_keymap("n", "<leader>e", "<CMD>NvimTreeToggle<CR>", { desc = "NvimTree Toggle" })
+vim.api.nvim_set_keymap("n", "<leader>o", "<CMD>NvimTreeFocus<CR>", { desc = "NvimTree Toggle" })
 
-map("i", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-map("v", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-map("n", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-map("s", "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-
-map("n", "<Esc>", "<Esc><cmd>nohlsearch<CR>", { desc = "Save file" })
-
-map("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Plugins manager" })
-map("n", "<leader>e", "<CMD>NvimTreeToggle<CR>", { desc = "NvimTree Toggle" })
-map("n", "<leader>o", "<CMD>NvimTreeFocus<CR>", { desc = "NvimTree Toggle" })
+vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 
 local opt = vim.opt
+
 opt.autowrite = true -- Enable auto write opt.clipboard = "unnamedplus" -- Sync with system clipboard opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 3 -- Hide * markup for bold and italic
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
