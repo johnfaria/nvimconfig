@@ -7,8 +7,10 @@ return {
   },
   {
     "boltlessengineer/smart-tab.nvim",
+    disables = true,
     config = function()
       require("smart-tab").setup({
+        exclude_filetype = {},
         -- default options:
         -- list of tree-sitter node types to filter
         skips = { "string_content" },

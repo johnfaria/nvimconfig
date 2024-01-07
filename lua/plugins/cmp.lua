@@ -4,7 +4,35 @@ return {
   event = "InsertEnter",
   dependencies = {
     -- Snippet Engine & its associated nvim-cmp source
-    "L3MON4D3/LuaSnip",
+    {
+      "L3MON4D3/LuaSnip",
+
+      -- keys = {
+      --   {
+      --     "<tab>",
+      --     function()
+      --       return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+      --     end,
+      --     expr = true,
+      --     silent = true,
+      --     mode = "i",
+      --   },
+      --   {
+      --     "<tab>",
+      --     function()
+      --       require("luasnip").jump(1)
+      --     end,
+      --     mode = "s",
+      --   },
+      --   {
+      --     "<S-tab>",
+      --     function()
+      --       require("luasnip").jump(-1)
+      --     end,
+      --     mode = { "i", "s" },
+      --   },
+      -- },
+    },
     "saadparwaiz1/cmp_luasnip",
 
     -- Adds LSP completion capabilities
@@ -20,35 +48,7 @@ return {
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-    -- local lspkind = require("lspkind")
 
-    local kind_icons = {
-      Text = "",
-      Method = "󰆧",
-      Function = "󰊕",
-      Constructor = "",
-      Field = "󰇽",
-      Variable = "󰂡",
-      Class = "󰠱",
-      Interface = "",
-      Module = "",
-      Property = "󰜢",
-      Unit = "",
-      Value = "󰎠",
-      Enum = "",
-      Keyword = "󰌋",
-      Snippet = "",
-      Color = "󰏘",
-      File = "󰈙",
-      Reference = "",
-      Folder = "󰉋",
-      EnumMember = "",
-      Constant = "󰏿",
-      Struct = "",
-      Event = "",
-      Operator = "󰆕",
-      TypeParameter = "󰅲",
-    }
     require("luasnip.loaders.from_vscode").lazy_load()
     luasnip.config.setup({})
 
@@ -71,10 +71,22 @@ return {
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         }),
+        ["<C-g>"] = function()
+          if cmp.visible_docs() then
+            cmp.close_docs()
+          else
+            cmp.open_docs()
+          end
+        end,
       }),
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
+      },
+      view = {
+        docs = {
+          auto_open = false,
+        },
       },
       sources = {
         -- { name = "copilot" },
@@ -89,29 +101,6 @@ return {
         { name = "crates" },
         { name = "tmux" },
       },
-      formatting = {
-        format = function(entry, vim_item)
-          local lspkind_ok, lspkind = pcall(require, "lspkind")
-          if not lspkind_ok then
-            -- From kind_icons array
-            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
-            -- Source
-            vim_item.menu = ({
-              copilot = "[Copilot]",
-              nvim_lsp = "[LSP]",
-              nvim_lua = "[Lua]",
-              luasnip = "[LuaSnip]",
-              buffer = "[Buffer]",
-              latex_symbols = "[LaTeX]",
-            })[entry.source.name]
-            return vim_item
-          else
-            -- From lspkind
-            return lspkind.cmp_format()(entry, vim_item)
-          end
-        end,
-      },
     })
   end,
 }
-
