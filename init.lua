@@ -13,7 +13,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.clipboard = {
+--[[ vim.g.clipboard = {
   name = "win32yank-wsl",
   copy = {
     ["+"] = "win32yank.exe -i --crlf",
@@ -24,7 +24,7 @@ vim.g.clipboard = {
     ["*"] = "win32yank.exe -o --lf",
   },
   cache_enabled = true,
-}
+} ]]
 
 require("custom-options")
 require("lazy").setup("plugins")
